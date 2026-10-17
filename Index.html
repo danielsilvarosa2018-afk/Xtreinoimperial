@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X-TREINO IMPERIAL</title>
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#fff}
+header{background:linear-gradient(135deg,#000,#8b0000);border-bottom:5px solid #ffcc00;padding:40px;text-align:center}
+h1{color:#ffcc00;font-size:44px;margin:0;text-shadow:0 0 10px #ff0000}
+.badge{background:#ffcc00;color:#000;padding:10px 25px;border-radius:25px;font-weight:900;display:inline-block;margin-top:15px}
+.box{max-width:650px;margin:20px auto;background:#111;border:2px solid #ff0000;border-radius:15px;padding:20px}
+label{color:#ffcc00;font-weight:bold}
+input{width:100%;padding:13px;margin:8px 0 15px;background:#222;border:1px solid #444;border-radius:8px;color:#fff;box-sizing:border-box}
+button{width:100%;padding:16px;background:#ffcc00;color:#000;font-weight:900;font-size:18px;border:none;border-radius:10px;cursor:pointer}
+button:hover{background:#ff0000;color:#fff}
+.line{background:#222;padding:10px;border-radius:8px;margin:5px 0;border-left:4px solid #ffcc00}
+</style></head><body>
+<header><h1>👑 X-TREINO IMPERIAL</h1><p style="color:#ff0000;font-weight:bold">FREE FIRE • TREINO DE LINES</p><div class="badge">INSCRIÇÃO GRÁTIS</div></header>
+<div class="box">
+<h2 style="color:#ffcc00">INSCREVER LINE</h2>
+<label>NOME DA LINE *</label><input id="line" placeholder="Ex: IMPERIAL ELITE">
+<label>CAPITÃO *</label><input id="cap" placeholder="Seu nick">
+<label>JOGADOR 1 *</label><input id="j1" placeholder="Nick">
+<label>JOGADOR 2 *</label><input id="j2" placeholder="Nick">
+<label>JOGADOR 3</label><input id="j3" placeholder="Nick (opcional)">
+<label>JOGADOR 4 / RESERVA</label><input id="j4" placeholder="Nick (opcional)">
+<label>SEU WHATSAPP *</label><input id="zap" placeholder="81 9xxxx-xxxx">
+<button onclick="enviar()">ENVIAR PRO WHATSAPP DA IMPERIAL</button>
+<p id="ok" style="color:#00ff88;text-align:center"></p>
+</div>
+<div class="box"><h3 style="color:#ffcc00">LINES INSCRITAS</h3><div id="lista"></div></div>
+<script>
+let lines=JSON.parse(localStorage.getItem('imperial')||'[]');
+function render(){document.getElementById('lista').innerHTML=lines.map((l,i)=>`<div class=line><b>${i+1}. ${l.line}</b> - ${l.j1}, ${l.j2} ${l.j3?','+l.j3:''}</div>`).join('')||'Nenhuma ainda';}
+function enviar(){
+ let L=document.getElementById('line').value, C=document.getElementById('cap').value, J1=document.getElementById('j1').value, J2=document.getElementById('j2').value, J3=document.getElementById('j3').value, J4=document.getElementById('j4').value, Z=document.getElementById('zap').value;
+ if(!L||!C||!J1||!J2||!Z){alert('Preencha obrigatórios');return;}
+ lines.push({line:L,j1:J1,j2:J2,j3:J3,j4:J4}); localStorage.setItem('imperial',JSON.stringify(lines)); render();
+ let msg=`*X-TREINO IMPERIAL - INSCRIÇÃO*%0A%0A👑 LINE: ${L}%0A👤 CAPITÃO: ${C}%0A🎮 LINE: ${J1}, ${J2}${J3?', '+J3:''}${J4?', '+J4:''}%0A📱 CONTATO: ${Z}`;
+ window.open(`https://wa.me/558188255523?text=${msg}`,'_blank');
+ document.getElementById('ok').innerText='Enviado! Confira seu WhatsApp';
+} render();
+</script></body></html>
